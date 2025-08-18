@@ -107,7 +107,7 @@ SHOW GRANTS FOR 'appuser'@'%';
 
 # Application server Setup
 
-Create "t2.micro" EC2 Instance and Open port "8080" for Node.js Application server
+Create "t2.micro" EC2 Instance and Open port "5000" for Node.js Application server
 
 ## Install Node and NPM
 ```
