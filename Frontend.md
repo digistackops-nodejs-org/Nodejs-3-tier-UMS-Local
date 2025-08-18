@@ -26,9 +26,9 @@ sudo chmod -R 755 /var/www/frontend/
 ## Get the Code
 
 ```
-git clone https://github.com/techizone-Medium-Project-org/Python-3-tier-UMS-App.git
-sudo chown -R ec2-user:ec2-user /home/ec2-user/Python-3-tier-UMS-App
-cd Python-3-tier-UMS-App
+git clone https://github.com/techizone-Medium-Project-org/Nodejs-3-tier-UMS-App.git
+sudo chown -R ec2-user:ec2-user /home/ec2-user/Nodejs-3-tier-UMS-App
+cd Nodejs-3-tier-UMS-App
 ```
 Switch branch
 
@@ -52,7 +52,7 @@ Note ==> we already setup the Reverse Proxy using Nginx alredy setup "nginx.conf
 
 ```
 sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
-sudo mv /home/ec2-user/Python-3-tier-UMS-App/frontend/nginx.conf /etc/nginx/
+sudo mv /home/ec2-user/Nodejs-3-tier-UMS-App/client/nginx.conf /etc/nginx/
 ```
 Edit your the Backend IP Address in nginx.conf
 ```

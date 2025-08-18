@@ -1,53 +1,66 @@
 ## Launch EC2 "t2.micro" Instance and In Sg, Open port "5000" for Python Application 
-# Backend-Python Application server
+# Backend-Node.js Application server
 
-## Install python
+## Install Node and NPM
 ```
 sudo yum update -y
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+. ~/.nvm/nvm.sh
+nvm install 16
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+nvm install --lts
+nvm use --lts
+```
+### Check Node Version
+```
+node -v
+npm -v
+```
+### Install Git
+```
 sudo yum install git -y
-sudo yum install python3 -y
-sudo yum install python3-pip -y
 ```
-
 ## Get the Code
+```
+git clone https://github.com/techizone-Medium-Project-org/Nodejs-3-tier-UMS-App.git
+cd Nodejs-3-tier-UMS-App
+sudo chown -R ec2-user:ec2-user /home/ec2-user/Nodejs-3-tier-UMS-App
+```
 
+## Add .env for DB Credentials 
 ```
-git clone https://github.com/techizone-Medium-Project-org/Python-3-tier-UMS-App.git
-sudo chown -R ec2-user:ec2-user /home/ec2-user/Python-3-tier-UMS-App
-cd Python-3-tier-UMS-App
+cd api
 ```
-Switch branch
-
-```
-git checkout 02-Local-setup-Prod
-```
-# Backend Setup
-```
-cd backend
-```
-Create connection file ".env" for DB connection
-Dont push ".env" to your SCM for security 
 ```
 sudo vim .env
 ```
 ```
-MONGO_USER=appuser
-MONGO_PASS=Pa55Word
-MONGO_HOST=your_db_private_ip
-MONGO_DB=user-account
+DB_HOST=<DB-Private-IP>
+DB_USER=appuser
+DB_PASSWORD=Aditya
+DB_NAME=crud_app
+JWT_SECRET=digistackSuperSecretKey
 ```
-Install Dependencies
+
+## Install Dependencies
 ```
-pip install -r requirements.txt
+npm install
 ```
+
+## Start the App
+```
+npm start
+```
+HERE it is not recommend in Production, so we follow the HA in Production
+
 Start Backend Application
 ```
-pip install gunicorn
+npm install -g pm2
 ```
 To run these Backend Application up and Running we use Linux service
 ```
-which gunicorn
-sudo cp -r  ~/.local/bin/gunicorn /usr/local/bin/
+which pm2
+sudo cp -r  ~/.local/bin/pm2 /usr/local/bin/
 ```
 
 ```
@@ -55,14 +68,14 @@ sudo vim /etc/systemd/system/backend.service
 ```
 ```
 [Unit]
-Description=Gunicorn Flask App
+Description=pm2 Node.js App
 After=network.target
 
 [Service]
 User=ec2-user
 Group=ec2-user
-WorkingDirectory=/home/ec2-user/My-python-EMS/backend
-ExecStart=/usr/local/bin/gunicorn --bind 0.0.0.0:5000 app:app
+WorkingDirectory=/home/ec2-user/Nodejs-3-tier-UMS-App/api
+ExecStart=/usr/local/bin/pm2 start app.js
 Restart=always
 
 [Install]

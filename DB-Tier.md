@@ -1,83 +1,98 @@
 ## Launch EC2 "t2.micro" Instance and In Sg, Open port "27017" for MongoDB
 # DB Tier
-# Install Mongo DB
-
-### Create mondDB repo in YUM repository
-```
-sudo vim /etc/yum.repos.d/mongodb-org-8.0.repo
-```
-### Add MongoDB repo Details 
-```
-[mongodb-org-8.0]
-name=MongoDB Repository
-baseurl=https://repo.mongodb.org/yum/amazon/2023/mongodb-org/8.0/x86_64/
-gpgcheck=1
-enabled=1
-gpgkey=https://pgp.mongodb.com/server-8.0.asc
-```
-### Install mongoDB
+## Install MYSQL DB
 ```
 sudo yum update -y
-sudo yum install -y mongodb-org
-```
-### Start mongoDB
-```
-sudo systemctl daemon-reload
-sudo systemctl enable mongod
-sudo systemctl start mongod
-sudo systemctl status mongod
-```
-## Setup MongoDB
-
-#### Allow Remote Access
-```
-sudo vim /etc/mongod.conf
-```
-Replace 0.0.0.0 in bindIp
-```
-# network interfaces 
-    net:   
-       port: 27017   
-       bindIp: 0.0.0.0 # to bind to all interfaces
-```
-##### Restart mongoDB
-```
-sudo systemctl restart mongod
-```
-### Use mongo-compass in your Local Machine and try to access your MongoDB
-```
-mongodb://<your-AWS-Public-IP>:27017
+sudo wget https://dev.mysql.com/get/mysql80-community-release-el9-1.noarch.rpm
+sudo dnf install mysql80-community-release-el9-1.noarch.rpm -y
+sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2023
+sudo dnf install mysql-community-client -y
+sudo dnf install mysql-community-server -y
+sudo systemctl start mysqld
+sudo systemctl enable mysqld
+sudo systemctl status mysqld
 ```
 
-# DB-Tier Setup
-Login to DB
+## Setup MYSQL DB
+
+#### Allow any Host connect to DB
 ```
-mongosh
+sudo vi /etc/my.cnf
 ```
-Connect to the admin database to create a user
+ADD these Under [mysqld]
 ```
-use admin
+bind-address = 0.0.0.0
+```
+Restart MYSQL DB
+```
+sudo systemctl restart mysqld
 ```
 
-Create  application's database "user-account"
+Get your temporary root Password
 ```
-use user-account
+sudo grep 'temporary password' /var/log/mysqld.log
 ```
-Create a user "appuser" with read/write access to the 'user-account' database
+Setup your root Password
 ```
-db.createUser({
-  user: "appuser",
-  pwd: "Pa55Word",
-  roles: [
-    { role: "readWrite", db: "user-account" }
-  ]
-});
+sudo mysql_secure_installation
 ```
-Create Collection "users"
+Login to your MYSQL
 ```
-db.createCollection("users")
+mysql -u root -p
 ```
-Exit from DB
+Test it is working or Not
 ```
-exit
+SELECT VERSION();
 ```
+## Create our Application DB 'crud_app'
+```
+CREATE DATABASE IF NOT EXISTS crud_app;
+```
+Check the DB created or Not
+```
+SHOW DATABASES LIKE 'crud_app';
+```
+<img width="286" height="114" alt="image" src="https://github.com/user-attachments/assets/44822257-352a-4828-b9c5-d6c164d6c9b4" />
+
+## Create one system User for our Application in DB
+These user can login to DB to do Tasks
+```
+CREATE USER '<user-name>'@'Host-IP' IDENTIFIED BY 'Password-HERE';
+
+GRANT ALL PRIVILEGES ON <DB-Name>.* TO '<user-name>'@'Host-IP';
+
+FLUSH PRIVILEGES;
+```
+```
+CREATE USER 'appuser'@'%' IDENTIFIED BY 'P@55Word';
+GRANT ALL PRIVILEGES ON crud_app.* TO 'appuser'@'%';
+FLUSH PRIVILEGES;
+```
+HERE % => any Host will connect
+Switch to the database
+```
+USE crud_app;
+```
+Drop table if needed (optional safety cleanup)
+```
+DROP TABLE IF EXISTS users;
+```
+Create the `users` table with proper structure
+```
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  role ENUM('admin', 'viewer') NOT NULL DEFAULT 'viewer',
+  is_active TINYINT(1) DEFAULT 1,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+Check the Grants of the "appuser" in DB
+
+```
+SHOW GRANTS FOR 'appuser'@'%';
+```
+<img width="443" height="130" alt="image" src="https://github.com/user-attachments/assets/9b78491c-4db2-4b7f-ab6d-aa331090c636" />
