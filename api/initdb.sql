@@ -15,3 +15,12 @@ CREATE TABLE IF NOT EXISTS users (
   is_active TINYINT(1) DEFAULT 1,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Insert dummy data
+INSERT INTO users (name, email, password, role, is_active)
+VALUES
+('Venkatesh', 'venkatesh@example.com', 'pass123', 'admin', 1),
+('Chaitanya', 'chaitanya@example.com', 'pass123', 'viewer', 1),
+('Padol', 'padol@example.com', 'pass123', 'viewer', 1),
+('Ganesh', 'ganesh@example.com', 'pass123', 'viewer', 1),
+('Pandu', 'pandu@example.com', 'pass123', 'viewer', 1);
