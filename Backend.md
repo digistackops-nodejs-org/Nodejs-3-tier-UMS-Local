@@ -14,7 +14,7 @@ sudo dnf install mysql-community-client -y
 Step:2 ==> Execute your "init.sql" script for your Application DB setup
 
 ```
-mysql -h'<DB-Private-IP>' -uappuser -p<Password>  < initdb.sql
+mysql -h <DB-Private-IP> -u appuser -p <Password> < initdb.sql
 ```
 
 ## Install Node and NPM
