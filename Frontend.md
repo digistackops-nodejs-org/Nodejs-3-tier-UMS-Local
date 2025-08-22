@@ -26,9 +26,8 @@ sudo chmod -R 755 /var/www/frontend/
 ## Get the Code
 
 ```
-git clone https://github.com/techizone-Medium-Project-org/Nodejs-3-tier-UMS-App.git
-sudo chown -R ec2-user:ec2-user /home/ec2-user/Nodejs-3-tier-UMS-App
-cd Nodejs-3-tier-UMS-App
+git clone https://github.com/digistackops-nodejs-org/Nodejs-3-tier-UMS-Local.git
+cd Nodejs-3-tier-UMS-Local
 ```
 Switch branch
 
