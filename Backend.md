@@ -75,7 +75,7 @@ npm install -g pm2
 To run these Backend Application up and Running we use Linux service
 ```
 which pm2
-sudo cp -r  ~/.local/bin/pm2 /usr/local/bin/
+sudo cp -r  ~/.nvm/versions/node/v22.18.0/bin/pm2 /usr/local/bin/
 ```
 
 ```
