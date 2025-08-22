@@ -22,10 +22,10 @@ sudo yum install git -y
 ```
 ## Get the Code
 ```
-git clone https://github.com/techizone-Medium-Project-org/Nodejs-3-tier-UMS-App.git
-cd Nodejs-3-tier-UMS-App
+git clone https://github.com/digistackops-nodejs-org/Nodejs-3-tier-UMS-Local.git
+cd Nodejs-3-tier-UMS-Local
 git checkout 02-Local-setup-Prod
-sudo chown -R ec2-user:ec2-user /home/ec2-user/Nodejs-3-tier-UMS-App
+sudo chown -R ec2-user:ec2-user /home/ec2-user/Nodejs-3-tier-UMS-Local
 ```
 ```
 cd api
@@ -89,7 +89,7 @@ After=network.target
 [Service]
 User=ec2-user
 Group=ec2-user
-WorkingDirectory=/home/ec2-user/Nodejs-3-tier-UMS-App/api
+WorkingDirectory=/home/ec2-user/Nodejs-3-tier-UMS-Local/api
 ExecStart=/usr/local/bin/pm2 start app.js
 Restart=always
 
