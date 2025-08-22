@@ -70,36 +70,26 @@ HERE it is not recommend in Production, so we follow the HA in Production
 
 Start Backend Application
 ```
-npm install -g pm2
+sudo npm install -g pm2
 ```
-To run these Backend Application up and Running we use Linux service
+To run these Backend Application up and Running we use Pm2 service
 ```
-which pm2
-sudo cp -r  ~/.nvm/versions/node/v22.18.0/bin/pm2 /usr/local/bin/
+pm2 start app.js --name backend
+```
+<img width="1089" height="110" alt="image" src="https://github.com/user-attachments/assets/4acd9488-9434-4dc3-86a1-c598bd6658c0" />
+
+To list all pm2 Services
+```
+pm2 list
+```
+To stop these pm2 service
+```
+pm2 stop backend
+```
+<img width="1105" height="127" alt="image" src="https://github.com/user-attachments/assets/a584378a-fb91-4911-8112-51cf7e49ab0e" />
+
+To delete these pm2 service
+```
+pm2 delete backend
 ```
 
-```
-sudo vim /etc/systemd/system/backend.service
-```
-```
-[Unit]
-Description=pm2 Node.js App
-After=network.target
-
-[Service]
-User=ec2-user
-Group=ec2-user
-WorkingDirectory=/home/ec2-user/Nodejs-3-tier-UMS-Local/api
-ExecStart=/usr/local/bin/pm2 start app.js
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-```
-Enable backend service
-```
-sudo systemctl daemon-reload
-sudo systemctl enable backend
-sudo systemctl start backend
-sudo systemctl status backend
-```
