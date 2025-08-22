@@ -50,7 +50,7 @@ Note ==> we already setup the Reverse Proxy using Nginx alredy setup "nginx.conf
 ### Setup "nginx.conf" for reverse Proxy to backend, we already have "nginx.conf" file 
 
 ```
-cd frontend
+cd client
 sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 sudo mv /home/ec2-user/Nodejs-3-tier-UMS-App/client/nginx.conf /etc/nginx/
 ```
