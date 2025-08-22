@@ -1,24 +1,6 @@
 ## Launch EC2 "t2.micro" Instance and In Sg, Open port "5000" for Python Application 
 # Backend-Node.js Application server
 
-## Setup your Application Database by executing "initdb.sql" script from Application-server
-
-Step:1 ==> install "MYSQL-Client" for communicate with MYSQL Database
-```
-sudo yum update -y
-sudo wget https://dev.mysql.com/get/mysql80-community-release-el9-1.noarch.rpm
-sudo dnf install mysql80-community-release-el9-1.noarch.rpm -y
-sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2023
-sudo dnf install mysql-community-client -y
-```
-Step:2 ==> Execute your "init.sql" script for your Application DB setup
-
-```
-cd backend
-mysql -h <DB-Prvate-IP> -udbadmin -pAdmin@123 < initdb.sql
-```
-why We use root user HERE => because we just launch MYSQL DB so no other user in DB
-
 ## Install Node and NPM
 ```
 sudo yum update -y
@@ -42,13 +24,28 @@ sudo yum install git -y
 ```
 git clone https://github.com/techizone-Medium-Project-org/Nodejs-3-tier-UMS-App.git
 cd Nodejs-3-tier-UMS-App
+git checkout 02-Local-setup-Prod
 sudo chown -R ec2-user:ec2-user /home/ec2-user/Nodejs-3-tier-UMS-App
 ```
-
-## Add .env for DB Credentials 
 ```
 cd api
 ```
+## Setup your Application Database by executing "initdb.sql" script from Application-server
+
+Step:1 ==> install "MYSQL-Client" for communicate with MYSQL Database
+```
+sudo yum update -y
+sudo wget https://dev.mysql.com/get/mysql80-community-release-el9-1.noarch.rpm
+sudo dnf install mysql80-community-release-el9-1.noarch.rpm -y
+sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2023
+sudo dnf install mysql-community-client -y
+```
+Step:2 ==> Execute your "init.sql" script for your Application DB setup
+
+```
+mysql -h <DB-Prvate-IP> -udbadmin -pAdmin@123 < initdb.sql
+```
+## Add .env for DB Credentials 
 ```
 sudo vim .env
 ```
