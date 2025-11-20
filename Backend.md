@@ -21,7 +21,7 @@ sudo yum install git -y
 ```
 git clone https://github.com/digistackops-nodejs-org/Nodejs-3-tier-UMS-Local.git
 cd Nodejs-3-tier-UMS-Local
-git checkout 02-Local-setup-Prod
+git checkout 02-Local-setup-Prod-V1
 sudo chown -R ec2-user:ec2-user /home/ec2-user/Nodejs-3-tier-UMS-Local
 ```
 ```
