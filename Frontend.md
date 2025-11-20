@@ -32,7 +32,7 @@ cd Nodejs-3-tier-UMS-Local
 Switch branch
 
 ```
-git checkout 02-Local-setup-Prod
+git checkout 02-Local-setup-Prod-V1
 ```
 Note => Nginx we we for 2 purpose 
         (1) For Frontend Load Balancing 
