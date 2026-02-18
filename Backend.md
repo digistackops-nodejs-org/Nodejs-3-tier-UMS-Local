@@ -1,4 +1,4 @@
-## Launch EC2 "t2.micro" Instance and In Sg, Open port "5000" for Python Application 
+## Launch EC2 "t2.micro" Instance and In Sg, Open port "5000" for NodeJS Application 
 # Backend-Node.js Application server
 
 ## Install Node and NPM
